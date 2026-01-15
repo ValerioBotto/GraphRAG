@@ -1,0 +1,17 @@
+fastapi
+gliner
+groq
+hf_xet
+huggingface_hub
+langchain-core
+langchain-text-splitters
+langgraph
+mistralai
+neo4j
+python-dotenv
+python-multipart
+sentence-transformers
+spacy
+spacy-layout
+torch
+uvicorn

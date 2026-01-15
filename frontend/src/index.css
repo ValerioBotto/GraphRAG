@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.font-outfit { font-family: 'Outfit', sans-serif; }
+.font-verdana { font-family: 'Verdana', sans-serif; }
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.orange-glow { box-shadow: 0 0 20px rgba(255, 102, 0, 0.2); }
+.orange-glow:hover { box-shadow: 0 0 30px rgba(255, 102, 0, 0.4); }
+
+@keyframes rotate-gear {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-gear-rotate { animation: rotate-gear 8s linear infinite; }
+
+.chat-scroll::-webkit-scrollbar { width: 4px; }
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.markdown-container strong {
+  font-weight: bold;
+  color: #FF6600;
+}
+
+.markdown-container p {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-container p:last-child {
+  margin-bottom: 0;
+}
