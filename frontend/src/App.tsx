@@ -4,6 +4,9 @@ import { AppStep } from './types';
 import { IconFileUp, IconSend, IconBot, IconGear, IconSparkles, IconArrowRight, IconLayers, IconDatabase, IconWorkflow, IconGlobe } from './components/Icons';
 import ReactMarkdown from 'react-markdown';
 
+// Definiamo l'URL del backend in una costante per facilitare future modifiche
+const BACKEND_URL = 'https://graphrag-rrnd.onrender.com';
+
 const App: React.FC = () => {
   const [step, setStep] = useState<AppStep>(AppStep.NAME_INPUT);
   const [previousStep, setPreviousStep] = useState<AppStep | null>(null);
@@ -41,13 +44,13 @@ const App: React.FC = () => {
       formData.append('file', file);
       formData.append('user_id', userData.name);
 
-      // Incremento simulato della barra per dare feedback visuale durante l'elaborazione pesante
       const progressInterval = setInterval(() => {
         setProgress(prev => (prev < 90 ? prev + 5 : prev));
       }, 800);
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/upload', {
+        // CORREZIONE: Aggiunto /upload all'URL di Render
+        const response = await fetch(`${BACKEND_URL}/upload`, {
           method: 'POST',
           body: formData,
         });
@@ -70,7 +73,7 @@ const App: React.FC = () => {
       } catch (error) {
         clearInterval(progressInterval);
         console.error("Errore durante l'ingestione:", error);
-        alert("Errore nel caricamento del file. Assicurati che il backend sia attivo e Neo4j sia raggiungibile.");
+        alert("Errore nel caricamento del file. Assicurati che il backend sia attivo.");
         setStep(AppStep.PDF_UPLOAD);
       }
     }
@@ -122,7 +125,8 @@ const App: React.FC = () => {
         user_id: userData.name
       });
 
-      const response = await fetch(`http://127.0.0.1:8000/chat?${queryParams}`, {
+      // CORREZIONE: Sostituito localhost con l'URL di Render
+      const response = await fetch(`${BACKEND_URL}/chat?${queryParams}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -324,8 +328,8 @@ const App: React.FC = () => {
                           ? 'bg-gray-100 text-gray-800 rounded-2xl rounded-tr-none' 
                           : 'text-gray-700 leading-relaxed text-[15px] markdown-container'
                         }`}>
-                          {/* Rendering Markdown per interpretare il grassetto e altre formattazioni */}
                           <div className="font-verdana">
+                            {/* Rendering Markdown per la formattazione AI */}
                             <ReactMarkdown>
                               {msg.content}
                             </ReactMarkdown>
