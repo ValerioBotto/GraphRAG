@@ -6,6 +6,12 @@ import shutil
 import os
 import logging
 
+port = int(os.environ.get("PORT", 8000))
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("api:app", host="0.0.0.0", port=port, reload=False)
+
 # Configurazione logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -21,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Inizializzazione dell'Indexer (carica i modelli di embedding all'avvio del server)
+# Inizializzazione dell'Indexer 
 indexer_worker = Indexer()
 
 @app.post("/upload")
