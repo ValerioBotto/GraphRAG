@@ -1,5 +1,4 @@
 # GraphRAG Chatbot
-<img width="1024" height="1024" alt="logo piccolo" src="https://github.com/user-attachments/assets/e5cd1867-b25c-4c45-83e2-ba4106efe221" />
 
 <div align="center">
   <img width="300" alt="logo piccolo" src="https://github.com/user-attachments/assets/e5cd1867-b25c-4c45-83e2-ba4106efe221" />
