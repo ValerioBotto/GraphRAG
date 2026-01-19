@@ -3,24 +3,24 @@
 <div align="center">
   <img width="300" alt="logo piccolo" src="https://github.com/user-attachments/assets/e5cd1867-b25c-4c45-83e2-ba4106efe221" />
   <br>
-  <em>Un sistema di recupero deterministico potenziato da Knowledge Graph e Orchestratori LLM.</em>
+  <em>Un sistema RAG potenziato da Knowledge Graph e Orchestratori LLM.</em>
 </div>
 
 ---
 
 ## 📋 Introduzione
 
-**GraphRAG Chatbot** è un sistema avanzato di *Retrieval-Augmented Generation* (RAG) progettato per analizzare documenti PDF complessi con un approccio **deterministico**.
+**GraphRAG Chatbot** è un sistema di *Retrieval-Augmented Generation* (RAG) progettato per analizzare documenti PDF complessi (ad es., manuali tecnici, medici, testi legali, bandi, procedure burocratiche, etc) con un approccio **deterministico**.
 
-A differenza dei sistemi RAG tradizionali che si affidano esclusivamente alla similarità vettoriale, questo progetto combina la potenza dei **Database a Grafo (Neo4j)** con l'orchestrazione semantica di **LangGraph**. L'obiettivo è eliminare le "allucinazioni" dell'AI: il modello non genera risposte basandosi sulla sua memoria di addestramento, ma agisce come un sintetizzatore rigoroso di informazioni estratte e validate dal documento caricato.
+A differenza dei sistemi RAG "tradizionali" che si affidano esclusivamente alla similarità vettoriale, questo progetto combina la potenza dei **Database a Grafo (Neo4j)** con l'orchestrazione semantica di **LangGraph** combinando anche l'uso di LLMs che agiscono come  router decisionali per la strategia di recupero o sintetizzatori di informazioni estratte e validate **esclusivamente** dal documento caricato.
 
-Il sistema è progettato per la privacy: può funzionare interamente **offline** scaricando i modelli in locale, creando una base di conoscenza privata che si espande ad ogni nuovo documento caricato.
+Il sistema è progettato per la privacy: può funzionare interamente **offline** scaricando i modelli in locale, creando una base di conoscenza privata che si espande ad ogni nuovo documento caricato. (scaricando i modelli open source usati (o quelli che si preferiscono) sulla propria macchina)
 
 ---
 
 ## 🏗️ Architettura del Sistema
 
-Il cuore del sistema è un'architettura a stati finiti (DAG - Directed Acyclic Graph) che coordina l'ingestione, l'analisi e il recupero delle informazioni in modo molto più rapido e prevedibile rispetto ai classici agenti "ReAct".
+Il cuore del sistema è un'architettura a stati finiti (DAG - Directed Acyclic Graph) che coordina l'ingestione, l'analisi e il recupero delle informazioni in modo molto più rapido e prevedibile rispetto all'architettura agentica "ReAct" usata in precedenza.
 
 ![Architettura GraphRAG] <img width="954" height="798" alt="Immagine 2026-01-19 145438" src="https://github.com/user-attachments/assets/d47364e5-419a-4604-929e-565e9cfd0199" />
 
@@ -34,7 +34,7 @@ I dati non finiscono in un semplice archivio vettoriale, ma in un **Knowledge Gr
 * **Database:** Utilizziamo [Neo4j AuraDB](https://neo4j.com/cloud/aura/), un database a grafo nativo che ci permette di collegare i chunk non solo per vicinanza matematica, ma per relazioni logiche ed entità condivise.
 * **Embedding Model:** [intfloat/multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large). Scelto per le sue eccellenti prestazioni multilingua e la profondità a 1024 dimensioni, cattura sfumature semantiche complesse.
 * **Named Entity Recognition (NER):** [GLiNER (urchade/gliner_medium-v2.1)](https://huggingface.co/urchade/gliner_medium-v2.1). 
-    * *Perché non spaCy?* In fase di test, modelli classici fallivano su termini scientifici (es. classificando "bmi-z score" come persona).
+    * *Perché non spaCy anche per le NE?* In fase di test, modelli classici fallivano su termini scientifici (es. classificando "bmi-z score" come persona).
     * *La soluzione:* GLiNER è un modello *zero-shot* capace di identificare entità eterogenee (nomi, luoghi, concetti tecnici, riferimenti normativi) senza training specifico. Queste entità diventano nodi nel grafo, creando "ponti" semantici tra concetti distanti nel testo.
 
 ![Neo4j Graph]
@@ -68,7 +68,7 @@ Il sistema adotta un approccio adattivo al recupero delle informazioni:
 3.  **Hybrid Search:** Combina i risultati vettoriali con quelli basati sulle entità per massimizzare il contesto.
 4.  **Global Search:** Se lo score di pertinenza dei risultati locali sul documento attivo è basso (es. < 0.7), il sistema estende automaticamente la ricerca all'intera base di conoscenza (tutti i PDF caricati in precedenza), garantendo una risposta anche se l'informazione è dispersa.
 
-### Reranking (Il Filtro di Qualità)
+### Reranking 
 Spesso la ricerca vettoriale recupera chunk simili ma non rilevanti. Per questo, implementiamo una fase di **Reranking**.
 * **Modello:** [BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3).
 * **Funzionamento:** Questo modello (Cross-Encoder) riceve in input i top ~15 chunk grezzi dal retriever e la domanda utente. Analizza la coppia parola per parola e riordina i risultati.
