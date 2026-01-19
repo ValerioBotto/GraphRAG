@@ -22,7 +22,7 @@ Il sistema è progettato per la privacy: può funzionare interamente **offline**
 
 Il cuore del sistema è un'architettura a stati finiti (DAG - Directed Acyclic Graph) che coordina l'ingestione, l'analisi e il recupero delle informazioni in modo molto più rapido e prevedibile rispetto all'architettura agentica "ReAct" usata in precedenza.
 
-![Architettura GraphRAG] <img width="954" height="798" alt="Immagine 2026-01-19 145438" src="https://github.com/user-attachments/assets/d47364e5-419a-4604-929e-565e9cfd0199" />
+<img width="954" height="798" alt="Immagine 2026-01-19 145438" src="https://github.com/user-attachments/assets/d47364e5-419a-4604-929e-565e9cfd0199" />
 
 ### 1. Ingestion & Elaborazione del Testo
 La fase di ingestione non si limita a "leggere" il testo, ma ne comprende la struttura.
@@ -37,7 +37,6 @@ I dati non finiscono in un semplice archivio vettoriale, ma in un **Knowledge Gr
     * *Perché non spaCy anche per le NE?* In fase di test, modelli classici fallivano su termini scientifici (es. classificando "bmi-z score" come persona).
     * *La soluzione:* GLiNER è un modello *zero-shot* capace di identificare entità eterogenee (nomi, luoghi, concetti tecnici, riferimenti normativi) senza training specifico. Queste entità diventano nodi nel grafo, creando "ponti" semantici tra concetti distanti nel testo.
 
-![Neo4j Graph]
 <img width="1395" height="858" alt="Immagine 2026-01-19 150409" src="https://github.com/user-attachments/assets/1b622597-6b75-41ce-8010-c54230807365" />
 
 ---
@@ -60,7 +59,6 @@ Come "cervello" decisionale utilizziamo [Mistral AI](https://mistral.ai/), in pa
 
 Il sistema adotta un approccio adattivo al recupero delle informazioni:
 
-![Strategie di Recupero]
 <img width="933" height="643" alt="Immagine 2026-01-19 145453" src="https://github.com/user-attachments/assets/892e816d-e443-4cfa-9187-258d822175fe" />
 
 1.  **Vector Match:** Attivata per domande concettuali o descrittive. Cerca i chunk semanticamente più vicini nello spazio vettoriale.
@@ -88,12 +86,11 @@ L'ultimo passaggio è affidato a un LLM generativo (**llama-3.1-8b-instant** via
 Il frontend è sviluppato in **React**.
 
 ### Home 
-![Home Screen]
 <img width="1897" height="904" alt="Immagine 2026-01-19 145123" src="https://github.com/user-attachments/assets/d0ba9cc5-2f18-4cbb-baeb-d2f843e7394f" />
 
 ### Chat 
 Visualizzazione chiara della risposta, con indicazione delle fonti e della strategia di recupero utilizzata.
-![Chat]
+
 <img width="781" height="509" alt="Immagine 2026-01-19 145946" src="https://github.com/user-attachments/assets/bc0e0784-4eb7-49fa-9a87-d691ee392437" />
 
 ---
@@ -113,6 +110,17 @@ Visualizzazione chiara della risposta, con indicazione delle fonti e della strat
 
 ---
 
+
+## Demo
+
+Il sistema è testabile collegandosi a questo indirizzo su Hugging Face Spaces:
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/ValerioBotto/GraphRag)
+
+*Il caricamento iniziale potrebbe richiedere alcuni secondi per l'inizializzazione dei modelli di machine learning.*
+
+---
+
 ## 👨‍💻 Crediti
 
 Questo progetto è nato come evoluzione di un'idea concepita durante il mio tirocinio curriculare presso l'azienda **Logogramma**.
@@ -120,3 +128,9 @@ Questo progetto è nato come evoluzione di un'idea concepita durante il mio tiro
 Sviluppato da **Valerio Botto**.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/valerio-botto-4844b2190/)
+
+---
+
+<div align="center">
+<img width="300" alt="logo grande" src="https://github.com/user-attachments/assets/154b6653-7514-4bbb-a38e-c18ba6a15d2b" />
+</div>
